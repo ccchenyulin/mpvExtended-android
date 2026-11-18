@@ -43,6 +43,13 @@ interface NetworkClient {
   suspend fun deleteFile(path: String): Result<Unit>
 
   /**
+   * Upload a local file to the given remote path (overwrite if exists).
+   * Only supported by protocols with write access (WebDAV, SMB...).
+   */
+  suspend fun uploadFile(localFile: java.io.File, remotePath: String, contentType: String = "application/octet-stream"): Result<Unit> =
+    Result.failure(UnsupportedOperationException("Upload not supported by this protocol"))
+
+  /**
    * Lightweight liveness ping. Implementations that hold a persistent connection (e.g. SMB)
    * should perform a cheap round-trip to keep the session warm and transparently reconnect
    * if it has been dropped. Default is a no-op for stateless clients.

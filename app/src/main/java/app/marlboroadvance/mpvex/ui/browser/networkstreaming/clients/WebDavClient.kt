@@ -142,6 +142,21 @@ class WebDavClient(private val connection: NetworkConnection) : NetworkClient {
       }
     }
 
+  override suspend fun uploadFile(
+    localFile: java.io.File,
+    remotePath: String,
+    contentType: String,
+  ): Result<Unit> =
+    withContext(Dispatchers.IO) {
+      try {
+        if (!isConnected()) connect().getOrThrow()
+        sardine!!.put(buildUrl(remotePath), localFile, contentType)
+        Result.success(Unit)
+      } catch (e: Exception) {
+        Result.failure(e)
+      }
+    }
+
   private fun getMimeType(fileName: String): String? {
     val extension = fileName.substringAfterLast('.', "").lowercase()
     return when (extension) {

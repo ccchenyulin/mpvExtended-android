@@ -1488,8 +1488,21 @@ class PlayerActivity :
     }
   }
 
-  private fun currentPlaybackUri(): Uri? =
+  internal fun currentPlaybackUri(): Uri? =
     playlist.getOrNull(playlistIndex) ?: extractUriFromIntent(intent)
+
+  /** 远程播放上下文：当前视频是否来自网络连接，及连接 id 与远程路径 */
+  internal fun currentNetworkContext(): Triple<Long, String?, String?>? {
+    val uri = currentPlaybackUri() ?: return null
+    val connectionId = intent.getLongExtra("network_connection_id", -1L)
+    if (connectionId < 0L) return null
+    val networkFilePath =
+      playlistNetworkFilePaths[uri]
+        ?: intent.getStringExtra("network_file_path")
+        ?: return null
+    val displayName = currentVideoDisplayName()
+    return Triple(connectionId, networkFilePath, displayName)
+  }
 
   internal fun currentVideoDisplayName(): String =
     currentPlaybackUri()?.let { uri ->

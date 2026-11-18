@@ -25,6 +25,8 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ContentCut
+import androidx.compose.material.icons.outlined.Segment
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AspectRatio
 import androidx.compose.material.icons.filled.Audiotrack
@@ -711,6 +713,46 @@ fun RenderPlayerButton(
       ControlsButton(
         icon = Icons.Default.FastForward,
         onClick = { viewModel.seekBy(playerPreferences.customSkipDuration.get()) },
+        color = if (hideBackground) controlColor else MaterialTheme.colorScheme.onSurface,
+        modifier = Modifier.size(buttonSize),
+      )
+    }
+
+    PlayerButton.CLIP_MARK -> {
+      val clipStart by viewModel.clipStart.collectAsState()
+      val clipEnd by viewModel.clipEnd.collectAsState()
+      val context = androidx.compose.ui.platform.LocalContext.current
+      val label = when {
+        clipStart == null -> "Clip: mark start"
+        clipEnd == null -> "Clip: mark end"
+        else -> "Clip: " + viewModel.formatTimestamp(clipStart!!) + " -> " + viewModel.formatTimestamp(clipEnd!!)
+      }
+      ControlsButton(
+        icon = Icons.Outlined.Segment,
+        title = label,
+        onClick = {
+          viewModel.markClipPoint()
+          viewModel.showToast(label)
+        },
+        onLongClick = {
+          viewModel.clearClipPoints()
+          viewModel.showToast("Clip cleared")
+        },
+        color = if (clipStart != null) MaterialTheme.colorScheme.primary
+          else if (hideBackground) controlColor else MaterialTheme.colorScheme.onSurface,
+        modifier = Modifier.size(buttonSize),
+      )
+    }
+
+    PlayerButton.CLIP_EXPORT -> {
+      val context = androidx.compose.ui.platform.LocalContext.current
+      ControlsButton(
+        icon = Icons.Outlined.ContentCut,
+        onClick = {
+          val act = context as? android.app.Activity
+          if (act != null) viewModel.exportClip(act)
+        },
+        onLongClick = { viewModel.showToast("Clip export (ffmpeg pending)") },
         color = if (hideBackground) controlColor else MaterialTheme.colorScheme.onSurface,
         modifier = Modifier.size(buttonSize),
       )

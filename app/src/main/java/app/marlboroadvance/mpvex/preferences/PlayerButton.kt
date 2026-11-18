@@ -25,6 +25,7 @@ import androidx.compose.material.icons.outlined.AutoMode
 import androidx.compose.material.icons.outlined.Shuffle
 import androidx.compose.material.icons.outlined.SwapVert
 import androidx.compose.material.icons.outlined.PlayCircle
+import androidx.compose.material.icons.outlined.ContentCut
 import androidx.compose.material.icons.outlined.Headset
 import androidx.compose.material.icons.outlined.DeleteForever
 import androidx.compose.runtime.Composable
@@ -61,6 +62,8 @@ enum class PlayerButton(
   CUSTOM_SKIP(Icons.Outlined.FastForward),
   AUTO_SKIP_CHAPTERS(Icons.Outlined.AutoMode),
   BACKGROUND_PLAYBACK(Icons.Outlined.Headset),
+  CLIP_MARK(Icons.Outlined.Segment),        // 裁剪: 标记起点/终点
+  CLIP_EXPORT(Icons.Outlined.ContentCut),   // 裁剪: 导出片段
   NONE(Icons.Outlined.Bookmarks),
 }
 
@@ -105,6 +108,9 @@ fun getPlayerButtonLabel(button: PlayerButton): String =
     PlayerButton.AB_LOOP -> "A-B Loop"
     PlayerButton.CUSTOM_SKIP -> "Custom Skip"
     PlayerButton.AUTO_SKIP_CHAPTERS -> androidx.compose.ui.res.stringResource(app.marlboroadvance.mpvex.R.string.player_auto_skip_label)
+    PlayerButton.AUTO_SKIP_CHAPTERS -> "Auto Skip Chapters"
+    PlayerButton.CLIP_MARK -> "Clip Mark Start/End"
+    PlayerButton.CLIP_EXPORT -> "Clip Export"
     PlayerButton.BACKGROUND_PLAYBACK -> "Background Playback"
     PlayerButton.NONE -> "None"
   }

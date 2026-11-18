@@ -186,6 +186,8 @@ dependencies {
   implementation(libs.androidx.material3.icons.extended)
   implementation(libs.androidx.compose.animation.graphics)
   implementation(libs.mediasession)
+  implementation(libs.media3.transformer)
+  implementation(libs.media3.container)
   implementation(libs.androidx.documentfile)
   implementation(libs.saveable)
 
