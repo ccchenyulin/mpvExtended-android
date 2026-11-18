@@ -1,3 +1,24 @@
+> ## ⚠️ 本仓库说明
+>
+> **这是 [XIONGPEILIN/mpvExtended-android](https://github.com/XIONGPEILIN/mpvExtended-android) 的个人定制分支（视频无损裁剪，个人自用，非官方项目）。**
+>
+> | 项 | 说明 |
+> |---|---|
+> | 上游项目 | https://github.com/XIONGPEILIN/mpvExtended-android |
+> | 本仓库性质 | 个人定制，未向上游提交 PR |
+> | 定制分支 | `video-clip` |
+> | 定制内容 | 播放器内无损视频裁剪：Media3 Transformer edit-list 模式（零重编码、帧精确起点），本地视频存源目录，WebDAV 视频上传回源目录 |
+> | 定制范围 | 新增裁剪按钮与导出逻辑，未修改原有播放功能 |
+> | 原许可证 | 遵循上游 LICENSE（见仓库内 LICENSE 文件） |
+>
+> 上游更新后同步方法：
+> ```bash
+> git fetch upstream
+> git merge upstream/main
+> ```
+>
+> ---
+
 ![mpv NAS Player banner](fastlane/metadata/android/en-US/images/featureGraphic.png)
 
 # mpv NAS Player
